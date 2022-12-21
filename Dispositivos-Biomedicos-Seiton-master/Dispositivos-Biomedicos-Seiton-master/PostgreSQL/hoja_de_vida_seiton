@@ -1,0 +1,400 @@
+/* Contenido Base de Datos SEITON */
+
+/* Descripción del bien*/
+
+drop table equip_description cascade;
+select * from equip_description;
+
+create table equip_description(
+	tipo_bien varchar,
+	nombre varchar not null,
+	marca varchar(15),
+	modelo varchar(30),
+	serie varchar(30),
+	fab_year int
+);
+
+/* Datos Técnicos*/
+
+drop table equip_tdata
+create type voltaje as enum('Monofásico','Bifásico','Trifásico');
+
+create table equip_tdata(
+	n_serie varchar(30),
+	vol int,
+	fase voltaje,
+	corriente int,
+	potencia int,
+	frecuencia int,
+	bateria int,
+	channels int,
+	memory varchar(15),
+	printer varchar(15),
+	observaciones varchar
+);
+
+/* Primary key (No ejecutar)*/
+/*alter table equip_tdata add constraint fk_datos_tecnicos foreign key (n_serie) references equip_description(serie);*/ 
+
+/* Datos Económicos */
+
+drop table datos_economicos
+
+create table datos_economicos(
+	n3_serie varchar(30),
+	valor_adq varchar,
+	n_factura int,
+	f_adquisicion varchar,
+	fecha date,
+	vida_util varchar
+);
+
+/* Primary key (No ejecutar)*/
+/* alter table datos_economicos add constraint fk_datos_economicos foreign key (n3_serie) references equip_description(serie); */ 
+
+/* Datos de Ubicacion del Equipo */
+
+drop table ubicacion_equipo
+
+create table ubicacion_equipo (
+	n4_serie varchar(30),
+	unidad_op varchar,
+	servicio varchar,
+	sub_servicio varchar,
+	nombre_custodio varchar,
+	zona varchar,
+	distrito varchar,
+	provincia varchar,
+	ciudad varchar
+);
+
+/* Primary key (No ejecutar)*/
+/*alter table ubicacion_equipo add constraint fk_datos_economicos foreign key (n4_serie) references equip_description(serie); */
+
+/* Datos de proveedor */
+
+drop table datos_proveedor
+create table datos_proveedor(
+	n5_serie varchar(30),
+	fabricante varchar,
+	direccion_fab varchar,
+	telefono_fab int,
+	email_fab varchar,
+	proveedor varchar,
+	direccion_prov varchar,
+	telefono_prov varchar,
+	email_prov varchar,
+	nombre_prov_cont varchar,
+	representate_pais varchar,
+	direccion_rep varchar,
+	telefono_rep varchar,
+	email_rep varchar,
+	nombre_rep varchar,
+	prov_manten varchar,
+	direccion_mant varchar,
+	telefono_mant varchar,
+	email_mant varchar,
+	nombre_mant varchar,
+	prov_calib varchar,
+	direccion_calib varchar,
+	telefono_calib varchar,
+	email_calib varchar,
+	nombre_calib varchar
+);
+
+/* Primary key (No ejecutar)*/
+/* alter table datos_proveedor add constraint fk_datos_economicos foreign key (n5_serie) references equip_description(serie); */
+
+/* DATOS REFERENCIALES */
+
+/* Requerimentos de funcionamiento */
+
+drop table equip_requirements;
+
+create table equip_requirements(
+	n1_serie varchar(30),
+	electrico bool,
+	med_electrico varchar,
+	mecanico bool,
+	med_mecanico varchar,
+	electronico bool,
+	med_electronico varchar,
+	hidraulico bool,
+	med_hidraulico varchar,
+	neumatico bool,
+	med_neumatico varchar,
+	electromecanico bool,
+	med_electromecanico varchar,
+	vapor bool,
+	med_vapor varchar,
+	glp bool,
+	med_glp varchar,
+	g_medicinal bool,
+	med_g_medicinal varchar,
+	a_comprimido bool,
+	med_a_comprimido varchar,
+	a_fria bool,
+	med_a_fria varchar,
+	a_caliente bool,
+	med_a_caliente varchar,
+	a_descal bool,
+	med_a_descal varchar,
+	otro bool,
+	med_otro varchar
+);
+
+/* Primary key (No ejecutar)*/
+/* alter table equip_requirements add constraint fk_funcionamiento foreign key (n1_serie) references equip_description(serie); */
+
+/* Tabla Parametros medidos */
+
+select * from equip_requirements;
+drop table equip_parameters;
+
+create table equip_parameters(
+	n2_serie varchar(30),
+	ecg bool,
+	spo2 bool,
+	f_cardiaca bool,
+	eeg bool,
+	spco bool,
+	co bool,
+	o2 bool,
+	apnea bool,
+	temperatura bool,
+	f_cerebral bool,
+	f_respiratoria bool,
+	p_invasiva bool,
+	arritmia bool,
+	p_ninvasiva bool,
+	ph bool,
+	masa bool,
+	pic bool,
+	bis bool,
+	vcv bool,
+	pcv bool,
+	simv bool,
+	peep bool,
+	psv bool,
+	mac bool,
+	no2 bool,
+	fio2 bool,
+	otro bool
+);
+
+/* Primary key (No ejecutar)*/
+/* alter table equip_parameters add constraint fk_parametros foreign key (n2_serie) references equip_description(serie); */
+
+/* Tabla existencia de informacion tecnica*/
+
+drop table info_tecnica
+create table info_tecnica (
+	n6_serie varchar(30),
+	manual_op bool,
+	manual_inst bool,
+	manual_servi bool,
+	manual_part bool,
+	otra_lit bool,
+	no_existe bool
+);
+
+/* Primary key (No ejecutar)*/
+/* alter table info_tecnica add constraint fk_funcionamiento foreign key (n6_serie) references equip_description(serie); */
+
+/* ESTADO */
+
+/* Estado del bien */
+
+drop table estado_bien
+create table estado_bien (
+	n7_serie varchar(30),
+	estatus varchar,
+	no_operativo varchar,
+	observaciones varchar
+);
+
+/* Primary key (No ejecutar)*/
+/*alter table estado_bien add constraint fk_funcionamiento foreign key (n7_serie) references equip_description(serie); */
+
+/* Accesorios del equipo */
+select * from accesorio_equipo
+drop table accesorio_equipo
+
+create table accesorio_equipo (
+	n8_serie varchar(30),
+	primero varchar,
+	segundo varchar,
+	tercero varchar,
+	cuarto varchar,
+	quinto varchar,
+	sexto varchar,
+	estado_pr varchar,
+	estado_se varchar,
+	estado_te varchar,
+	estado_cu varchar,
+	estado_qu varchar,
+	estado_sex varchar,
+	observaciones varchar
+);
+
+/* Primary key (No ejecutar)*/
+/*alter table accesorio_equipo  add constraint fk_funcionamiento foreign key (n8_serie) references equip_description(serie);*/ 
+
+/* Otros datos */
+
+drop table otros_datos
+create table otros_datos(
+	n9_serie varchar(30),
+	garantia bool,
+	contrato bool,
+	frecuencia varchar,
+	responsable varchar,
+	observaciones varchar
+);
+
+/* Primary key (No ejecutar)*/
+/*alter table otros_datos  add constraint fk_funcionamiento foreign key (n9_serie) references equip_description(serie); */
+
+/* REGISTRO DE ELABORACION Y ACTUALIZACION */
+
+drop table registro_elab
+create table registro_elab (
+	n10_serie varchar(30),
+	nombre_resp varchar,
+	cargo varchar,
+	telefono int,
+	email varchar,
+	fecha date,
+	firmar varchar
+);
+
+/* Primary key (No ejecutar)*/
+/* alter table registro_elab  add constraint fk_funcionamiento foreign key (n10_serie) references equip_description(serie); */ 
+
+/* Busqueda general*/
+
+select * from equip_description
+select * from registro_elab
+select * from estado_bien
+select * from accesorio_equipo
+select *  from equip_tdata
+select *  from equip_parameters
+select *  from otros_datos
+select *  from info_tecnica
+
+/* Query General REPORTES GUARDADOS */
+
+select R.fecha as fecha_emision, R.nombre_resp as Responsable_registro, E.nombre, E.serie, E.modelo, E.fab_year,
+B.estatus, U.servicio  from registro_elab R inner join equip_description E on R.n10_serie=E.serie 
+inner join estado_bien B on E.serie=B.n7_serie inner join ubicacion_equipo U on U.n4_serie= E.serie group by 
+R.fecha, E.nombre, E.serie, R.nombre_resp, E.modelo,E.fab_year, B.estatus, U.servicio order by R.fecha desc;
+
+/*Query por busqueda de serie descripcion del bien*/
+
+select * from equip_description where serie = '33333';
+
+/*Query por busqueda de serie descripcion del EQUIP DATA*/
+
+select * from equip_tdata where n_serie = '33333';
+
+/*Query por busqueda de serie DATOS ECONOMICOS*/
+
+select * from datos_economicos where n3_serie = '33333';
+
+/*Query por busqueda de serie UBICACION DEL EQUIPO*/
+
+select * from ubicacion_equipo where n4_serie = '33333';
+
+/*Query por busqueda de serie DATOS DE PROVEEDOR*/
+
+select * from datos_proveedor where n5_serie = '33333';
+
+/*Query por busqueda de serie REQUERIMENTOS DE FUNCIONAMIENTO*/
+
+select * from equip_requirements where n1_serie = '33333';
+
+/*Query por busqueda de serie PARAMETROS TRANSMITIDOS*/
+
+select * from equip_parameters where n2_serie = '33333';
+
+/*Query por busqueda de serie INFORMACIÓN TÉCNICA*/
+
+select * from info_tecnica where n6_serie = '33333';
+
+/*Query por busqueda de serie ESTADO DEL BIEN*/
+
+select * from estado_bien where n7_serie = '33333';
+
+/*Query por busqueda de serie ACCESORIOS DEL EQUIPO*/
+
+select * from accesorio_equipo where n8_serie = '33333';
+
+/*Query por busqueda de serie OTROS DATOS*/
+
+select * from otros_datos where n9_serie = '33333';
+
+/*Query por busqueda de serie ELABORACION DE REGISTROS*/
+
+select * from registro_elab where n10_serie = '33333';
+
+/*<---------------------------------------------------------------------->*/
+ /* AQUI ES LA SECCIÓN DE IMPLEMENTACIONES SIN TERMINAR */
+ /* En contexto para la actualizacion de los dispositivos se planteo la anternativa de tomar las series de cada
+ dispositivo donde en el caso en el sistema se ingrese la serie de nuevo, el sistema lo indentifique y lo cambie
+ de la siguiente manera*/
+ /* Serie guardada: 1234; Ingresa de nuevo la serie: 1234; El trigger de cambiar la serie a 1234-1*/
+ /* Para una segunda actualizacion un contador aumentara el valor tal que la serie*/
+ /* 1234, 1234-1, 1234-2, 1234-... */
+ 
+ /*ESTE ES EL CODIGO DE PRUEBA, NO EJECUTAR, MEJORAR E IMPLEMENTARLO*/
+
+/*Secuencia para serie distinguir */
+
+drop sequence id_serie_next
+
+create sequence id_serie_next
+start with 1 increment by 1 minvalue 1 maxvalue 100000
+no cycle;
+
+select * from "id_serie_next"
+select nextval('id_serie_next')
+
+/* Funcion para cambiar la serie */
+
+drop function cambiar_serie cascade
+create function cambiar_serie() returns Trigger
+as
+$$
+declare 
+	e record;
+begin
+	
+	for e in select serie from equip_description group by serie loop
+		if e.serie = '12345' then
+			/*series int := (select new.serie||'-'||nextval('id_serie_next'::regclass)::varchar from equip_description);*/
+			update equip_tdata set n_serie = new.n_serie||'-'||nextval('id_serie_next'::regclass)::varchar where n_serie='12345';
+			/*update equip_description set serie = new.serie||'-'||nextval('id_serie_next'::regclass)::varchar where serie='12345';*/
+			/*update equip_description set serie = series where serie='12345';*/
+		end if;
+	end loop;
+	return new;
+end
+$$
+language plpgsql;
+
+/* Trigger */
+drop trigger TR_serie;
+
+create trigger TR_serie after insert on equip_description
+for each row
+execute procedure cambiar_serie();
+
+/*Test de trigger */
+
+insert into equip_tdata values ('12345',11, 'Bifásico',12,23,23,12,23,'hola','quehace' );
+select * from equip_tdata where n_serie like '12345%'
+select * from datos_economicos;
+select * from equip_description order by serie asc;
+insert into equip_description values ('Equipo Biomédico','Esteroscopio','HYH','FDR-4','1111',2008)
+select serie||'-'||nextval('id_serie_next'::regclass)::varchar from equip_description
+
